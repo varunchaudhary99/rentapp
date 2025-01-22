@@ -219,7 +219,7 @@ class _HomePageBikeState extends State<HomePageBike> {
             itemBuilder: (context,index) =>GestureDetector(
               onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context)=> BikeDetailsPage()));}, child: Column(children: [
                 _buildCarCard(
-                'assets/images/bike.jpeg',
+                'assets/images/bike.jpg',
                 'Bajaj Pulser',
                 4.5,
                 'GHS 100/day',
