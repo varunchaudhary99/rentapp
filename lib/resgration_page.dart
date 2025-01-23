@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:rentapp/widgets/button/custombutton.dart';
+import 'package:rentapp/widgets/widgets/CustomTextStyle.dart';
 import 'package:rentapp/widgets/widgets/colors.dart';
+
+import 'common/file_picker.dart';
 
 
 
@@ -132,18 +138,31 @@ class _RegistrationState extends State<Registration> {
   }
 }
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String title;
 
    DetailScreen({required this.title});
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  File? frontView;
+
+  File? selfieFile;
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController lastNameController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -153,14 +172,10 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _buildContent() {
-    if (title == 'Basic Info') {
+    if (widget.title == 'Basic Info') {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Basic Info Screen',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
           SizedBox(height: 16),
           Center(
             child: Stack(
@@ -174,7 +189,8 @@ class DetailScreen extends StatelessWidget {
 
                 // Positioned Camera Icon
                 Positioned(
-                  bottom: 0,
+
+                bottom: 0,
                   right: 0,
                   child: GestureDetector(
                     onTap: () {
@@ -199,6 +215,13 @@ class DetailScreen extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height:20),
+          Text("Face clearly visible",style: CustomTextStyle.blackColorBold14,),
+          SizedBox(height: 20,),
+          Text("Remove sunglasses, mask and any cap.",style: CustomTextStyle.blackColorBold14,),
+          SizedBox(height:20),
+          Text("You should be wearing clothes, your hands should be completely free, do not use any filter, only you can see in the frame.",style: CustomTextStyle.blackColorBold14,),
+          SizedBox(height:20),
           TextField(
             controller: nameController,
             decoration: InputDecoration(
@@ -214,6 +237,7 @@ class DetailScreen extends StatelessWidget {
               border: OutlineInputBorder(),
             ),
           ),
+          SizedBox(height: 20,),
           TextField(
             controller: ageController,
             decoration: InputDecoration(
@@ -221,7 +245,7 @@ class DetailScreen extends StatelessWidget {
               border: OutlineInputBorder(),
             ),
           ),
-
+          SizedBox(height: 20,),
           DefaultColorButton(
             onPressed: (){},
             color: ColorSelect.greenColor,
@@ -229,54 +253,288 @@ class DetailScreen extends StatelessWidget {
           )
           )],
       );
-    } else if (title == 'Driving License') {
-      return Column(
+    } else if (widget.title == 'Driving License') {
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 16),
+
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'License Number',
+                border: OutlineInputBorder(),
+              ),
+            ),
+        SizedBox(),
+
+            ...uploadSelfie(),
+            SizedBox(),
+            ...uploadSelfie(),
+            SizedBox(height: 20,),
+            DefaultColorButton(
+                onPressed: (){},
+                color: ColorSelect.greenColor,
+                child: Text('Done',style: TextStyle(color: ColorSelect.whiteColor,),
+                )
+            )
+            ],
+        ),
+      );
+    } else if (widget.title == 'Aadhaar Card') {
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Aadhaar Number',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            Text("Front View"),
+            ...uploadSelfie(),
+            SizedBox(height: 20,),
+            Text("Back View"),
+            ...uploadSelfie(),
+            SizedBox(height: 20,),
+            DefaultColorButton(
+                onPressed: (){},
+                color: ColorSelect.greenColor,
+                child: Text('Done',style: TextStyle(color: ColorSelect.whiteColor,),
+                )
+            )
+          ],
+        ),
+      );
+    }else if (widget.title == 'Police Verification Certificate') {
+      return  SingleChildScrollView(child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Driving License Screen',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
           TextField(
             decoration: InputDecoration(
-              labelText: 'License Number',
+              labelText: 'Police Verification Certificate',
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 16),
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Expiry Date',
-              border: OutlineInputBorder(),
-            ),
-          ),
+          Text("Front View"),
+          ...uploadSelfie(),
+          SizedBox(height: 20,),
+         /* Text("Back View"),
+          ...uploadSelfie(),
+          SizedBox(height: 20,)*/
+          DefaultColorButton(
+              onPressed: (){},
+              color: ColorSelect.greenColor,
+              child: Text('Done',style: TextStyle(color: ColorSelect.whiteColor,),
+              )
+          )
         ],
-      );
-    } else if (title == 'Aadhaar Card') {
-      return Column(
+      ));
+    }
+    else if (widget.title == 'Vehicle Info') {
+      return SingleChildScrollView(child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Aadhaar Card Screen',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
           TextField(
             decoration: InputDecoration(
-              labelText: 'Aadhaar Number',
+              labelText: 'Vehicle Info',
               border: OutlineInputBorder(),
             ),
           ),
+          SizedBox(height: 5,),
+          Text("Front View"),
+          ...uploadSelfie(),
+          Text("Back View"),
+          ...uploadSelfie(),
+          SizedBox(height: 10,),
+          DefaultColorButton(
+              onPressed: (){},
+              color: ColorSelect.greenColor,
+              child: Text('Done',style: TextStyle(color: ColorSelect.whiteColor,),
+              )
+          )
         ],
-      );
-    } else {
+      ));
+    }
+    else if (widget.title == 'Vehicle Insurance') {
+      return SingleChildScrollView( child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Vehicle Insurance',
+              border: OutlineInputBorder(),
+            ),
+          ),
+
+          Text("Front View"),
+          ...uploadSelfie(),
+          SizedBox(height: 20,),
+          Text("Back View"),
+          ...uploadSelfie(),
+          SizedBox(height: 20,),
+          DefaultColorButton(
+              onPressed: (){},
+              color: ColorSelect.greenColor,
+              child: Text('Done',style: TextStyle(color: ColorSelect.whiteColor,),
+              )
+          )
+        ],
+      ));
+    }
+
+    else {
       return Center(
         child: Text(
-          'This is the $title screen.',
+          'This is the ${widget.title} screen.',
           style: TextStyle(fontSize: 18),
         ),
       );
     }
+  }
+
+  List<Widget> uploadSelfie() {
+    return [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+
+        ],
+      ),
+      SizedBox(
+        height: 20,
+      ),
+      backSide(),
+      SizedBox(
+        height: 40,
+      ),
+    ];
+  }
+
+  Widget frontViewWidget() {
+    return InkWell(
+      onTap: () async {
+        frontView = await openFilePicker(context);
+        setState(() {});
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 200,
+            width: 320,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2), // Shadow color
+                  spreadRadius: 1, // Spread radius
+                  blurRadius: 5, // Blur radius
+                  offset: Offset(0, 4), // Offset in x and y direction
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 160,
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
+                  color: ColorSelect.whiteColor,
+                ),
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(10),
+                  padding: EdgeInsets.all(40),
+                  color: ColorSelect.greyColor,
+                  strokeWidth: 1,
+                  child: frontView != null
+                      ? Center(
+                      child: Image.file(
+                        frontView!,
+                        fit: BoxFit.fitWidth,
+                        height: 150,
+                        width: 160,
+                      ))
+                      : Center(
+                      child: Icon(
+                        Icons.add_circle,
+                        color: ColorSelect.greenColor,
+                      )),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget backSide() {
+    return InkWell(
+      onTap: () async {
+        selfieFile = await openFilePicker(context,hideGalery: true);
+        setState(() {});
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 200,
+            width: 320,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2), // Shadow color
+                  spreadRadius: 1, // Spread radius
+                  blurRadius: 5, // Blur radius
+                  offset: Offset(0, 4), // Offset in x and y direction
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 160,
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
+                  color: ColorSelect.whiteColor,
+                ),
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(10),
+                  padding: EdgeInsets.all(40),
+                  color: ColorSelect.greyColor,
+                  strokeWidth: 1,
+                  child: selfieFile != null
+                      ? Center(
+                      child: Image.file(
+                        selfieFile!,
+                        fit: BoxFit.fitWidth,
+                        height: 150,
+                        width: 160,
+                      ))
+                      : Center(
+                      child: Icon(
+                        Icons.add_circle,
+                        color: ColorSelect.pinkColor,
+                      )),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
