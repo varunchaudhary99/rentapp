@@ -70,19 +70,14 @@ class _RegistrationState extends State<Registration> {
               ),
             ),
             // "Done" Button
-            ElevatedButton(
+            DefaultColorButton(
               onPressed: () {
                 // Handle Submit Action
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                minimumSize: Size(double.infinity, 50), // Full width button
-              ),
+              }, // Full width button
+              color: ColorSelect.greenColor,
               child: Text(
                 'Done',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18,color: Colors.white),
               ),
             ),
             SizedBox(height: 16),
@@ -157,6 +152,7 @@ class _DetailScreenState extends State<DetailScreen> {
   final TextEditingController lastNameController = TextEditingController();
 
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController lineNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -164,9 +160,11 @@ class _DetailScreenState extends State<DetailScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: _buildContent(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: _buildContent(),
+        ),
       ),
     );
   }
@@ -216,33 +214,127 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
           SizedBox(height:20),
-          Text("Face clearly visible",style: CustomTextStyle.blackColorBold14,),
+          Text("Face clearly visible",style: CustomTextStyle.blackColorBold18,),
           SizedBox(height: 20,),
-          Text("Remove sunglasses, mask and any cap.",style: CustomTextStyle.blackColorBold14,),
+          Text("Remove sunglasses, mask and any cap.",style: CustomTextStyle.blackColorBold18,),
           SizedBox(height:20),
-          Text("You should be wearing clothes, your hands should be completely free, do not use any filter, only you can see in the frame.",style: CustomTextStyle.blackColorBold14,),
+          Text("You should be wearing clothes, your hands should be completely free, do not use any filter, only you can see in the frame.",style: CustomTextStyle.blackColorBold18,),
           SizedBox(height:20),
-          TextField(
-            controller: nameController,
-            decoration: InputDecoration(
-              labelText: 'Name',
-              border: OutlineInputBorder(),
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15), // Rounded edges for the card
+            ),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white, // Background color for the card
+              ),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: "First Name",
+                  labelStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded edges for the text field
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: ColorSelect.greenColor, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  prefixIcon: Icon(Icons.person, color: ColorSelect.greenColor),
+
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                ),
+              ),
             ),
           ),
-          SizedBox(height: 16),
-          TextField(
-            controller: lastNameController,
-            decoration: InputDecoration(
-              labelText: 'Last Name',
-              border: OutlineInputBorder(),
+
+          SizedBox(height: 20), // Space between the fields
+
+          // Age Input
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15), // Rounded edges for the card
+            ),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white, // Background color for the card
+              ),
+              child: TextField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  labelText: "Last Name",
+                  labelStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded edges for the text field
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: ColorSelect.greenColor, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  prefixIcon: Icon(Icons.account_box, color: ColorSelect.greenColor),
+
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                ),
+              ),
             ),
           ),
+
           SizedBox(height: 20,),
-          TextField(
-            controller: ageController,
-            decoration: InputDecoration(
-              labelText: 'Date of Birth(optional)',
-              border: OutlineInputBorder(),
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15), // Rounded edges for the card
+            ),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white, // Background color for the card
+              ),
+              child: TextField(
+                controller: ageController,
+                decoration: InputDecoration(
+                  labelText: "Enter your age",
+                  labelStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded edges for the text field
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: ColorSelect.greenColor, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  prefixIcon: Icon(Icons.cake, color: ColorSelect.greenColor),
+                  hintText: "Enter Your Age",
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                ),
+              ),
             ),
           ),
           SizedBox(height: 20,),
@@ -260,16 +352,49 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             SizedBox(height: 16),
 
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'License Number',
-                border: OutlineInputBorder(),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // Rounded edges for the card
+              ),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white, // Background color for the card
+                ),
+                child: TextField(
+                  controller: lineNumberController,
+                  decoration: InputDecoration(
+                    labelText: "Liceance Number",
+                    labelStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded edges for the text field
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.purple, width: 2), // Customized color
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    prefixIcon: Icon(Icons.confirmation_number, color: Colors.purple), // Lineage number icon
+                    hintText: "Enter your liceance number",
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                  ),
+                  keyboardType: TextInputType.number, // Ensures numeric input
+                ),
               ),
             ),
         SizedBox(),
-
+            Text("Front View"),
             ...uploadSelfie(),
             SizedBox(),
+            SizedBox(height: 20,),
+            Text("Back View"),
             ...uploadSelfie(),
             SizedBox(height: 20,),
             DefaultColorButton(
@@ -285,15 +410,49 @@ class _DetailScreenState extends State<DetailScreen> {
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Aadhaar Number',
-                border: OutlineInputBorder(),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // Rounded edges for the card
+              ),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white, // Background color for the card
+                ),
+                child: TextField(
+                  controller: lineNumberController,
+                  decoration: InputDecoration(
+                    labelText: "aadhaar Number",
+                    labelStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded edges for the text field
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.purple, width: 2), // Customized color
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    prefixIcon: Icon(Icons.confirmation_number, color: Colors.purple), // Lineage number icon
+                    hintText: "Enter your aadhaar number",
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                  ),
+                  keyboardType: TextInputType.number, // Ensures numeric input
+                ),
               ),
             ),
+            SizedBox(height: 10,),
             Text("Front View"),
             ...uploadSelfie(),
+            SizedBox(),
             SizedBox(height: 20,),
             Text("Back View"),
             ...uploadSelfie(),
@@ -311,15 +470,11 @@ class _DetailScreenState extends State<DetailScreen> {
       return  SingleChildScrollView(child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Police Verification Certificate',
-              border: OutlineInputBorder(),
-            ),
-          ),
+
           Text("Front View"),
           ...uploadSelfie(),
-          SizedBox(height: 20,),
+
+
          /* Text("Back View"),
           ...uploadSelfie(),
           SizedBox(height: 20,)*/
@@ -336,15 +491,12 @@ class _DetailScreenState extends State<DetailScreen> {
       return SingleChildScrollView(child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Vehicle Info',
-              border: OutlineInputBorder(),
-            ),
-          ),
+
           SizedBox(height: 5,),
           Text("Front View"),
           ...uploadSelfie(),
+          SizedBox(),
+          SizedBox(height: 20,),
           Text("Back View"),
           ...uploadSelfie(),
           SizedBox(height: 10,),
@@ -361,15 +513,10 @@ class _DetailScreenState extends State<DetailScreen> {
       return SingleChildScrollView( child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              labelText: 'Vehicle Insurance',
-              border: OutlineInputBorder(),
-            ),
-          ),
 
           Text("Front View"),
           ...uploadSelfie(),
+          SizedBox(),
           SizedBox(height: 20,),
           Text("Back View"),
           ...uploadSelfie(),
@@ -485,28 +632,27 @@ class _DetailScreenState extends State<DetailScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 200,
+            height: 320,
             width: 320,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              borderRadius: BorderRadius.circular(15),
+             /* boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2), // Shadow color
                   spreadRadius: 1, // Spread radius
                   blurRadius: 5, // Blur radius
                   offset: Offset(0, 4), // Offset in x and y direction
-                ),
-              ],
+                ),*/
             ),
-            child: Padding(
+      child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                width: 160,
+                width: 180,
                 height: 180,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(20.0),
+                    Radius.circular(10.0),
                   ),
                   color: ColorSelect.whiteColor,
                 ),
@@ -521,14 +667,18 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Image.file(
                         selfieFile!,
                         fit: BoxFit.fitWidth,
-                        height: 150,
+                        height: 160,
                         width: 160,
                       ))
                       : Center(
-                      child: Icon(
-                        Icons.add_circle,
-                        color: ColorSelect.pinkColor,
-                      )),
+                      child: Column(
+
+                          children:[
+
+                      Text("Drag and drop Image",style:CustomTextStyle.greyColorNormal14),
+                        Icon(Icons.image_rounded,size: 100,color: ColorSelect.greyColor,),
+                        Text("Image format-jpg,png,jpeg,gif \n       Maximum size - 2 MB \n     Recommended ratio-1:1",style:CustomTextStyle.greyColorNormal14),
+                      ])),
                 ),
               ),
             ),
